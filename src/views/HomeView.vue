@@ -5,17 +5,7 @@
         <h1>TV Show Explorer</h1>
       </header>
 
-      <div class="home-view__search">
-        <input
-          type="text"
-          placeholder="Search for TV shows..."
-          v-model="query"
-          @keyup.enter="handleSearch"
-        />
-        <button type="button" @click="handleSearch" :disabled="loading || !query.trim()">
-          {{ loading ? 'Searching...' : 'Search' }}
-        </button>
-      </div>
+      <SearchBar v-model="query" :loading="loading" @search="handleSearch" />
 
       <div class="home-view__results">
         <p v-if="loading">Loading...</p>
@@ -64,6 +54,7 @@
   import { ref } from 'vue'
   import { searchShows } from '../services/tvmazeService'
   import { stripHtml, truncate } from '../utils/text'
+  import SearchBar from '../components/SearchBar.vue'
 
   const query = ref('')
   const results = ref([])
