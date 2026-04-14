@@ -1,11 +1,19 @@
+const BASE_URL = 'https://api.tvmaze.com'
 export async function searchShows(query) {
-    const response = await fetch(`https://api.tvmaze.com/search/shows?q=${query}`);
-    const data = await response.json();
-    return data.map(result => result.show);
+  const response = await fetch(`${BASE_URL}/search/shows?q=${encodeURIComponent(query)}`)
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch shows')
+  }
+  const data = await response.json()
+  return data.map((result) => result.show)
 }
 
 export async function getShowDetails(id) {
-    const response = await fetch(`https://api.tvmaze.com/shows/${id}`);
-    const data = await response.json();
-    return data;
+  const response = await fetch(`${BASE_URL}/shows/${id}`)
+  if (!response.ok) {
+    throw new Error('Failed to fetch show details')
+  }
+  const data = await response.json()
+  return data
 }
