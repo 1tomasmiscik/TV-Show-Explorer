@@ -12,15 +12,30 @@
                 v-model="query"
                 @keyup.enter="handleSearch"
             />
-            <button type="button" @click="handleSearch">Search</button>
+            <button type="button" @click="handleSearch" :disabled="loading || !query.trim()">
+                {{ loading ? 'Searching...' : 'Search' }}
+            </button>
         </div>
 
         <div class="home-view__results">
-            <h2>Search Results</h2>
             <div v-for="show in results" :key="show.id">
-                <h2>{{ show.name }}</h2>
-                <img v-if="show.image" :src="show.image.medium" :alt="show.name" />
-                <p class="summary" v-if="show.summary">{{ stripHtml(show.summary) }}</p>
+                <p v-if="loading">
+                    Loading...
+                </p>
+                <p v-else-if="errorMessage">
+                    {{ errorMessage }}
+                </p>
+                <p v-else-if="hasSearched && results.length === 0">
+                    No TV shows found.
+                </p>
+                <div v-if="results.length > 0">
+                    <h2>Search Results</h2>
+                    <h2>{{ show.name }}</h2>
+                    <img v-if="show.image" :src="show.image.medium" :alt="show.name" />
+                    <p class="summary">
+                        {{ show.summary ? stripHtml(show.summary) : 'No summary available.' }}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -33,13 +48,28 @@ import { searchShows } from '../services/tvmazeService'
 const query = ref('')
 const results = ref([])
 
+const loading = ref(false)
+const errorMessage = ref('')
+const hasSearched = ref(false)
+
 const handleSearch = async() => {
     if (!query.value.trim()) {
         return
     }
 
-    const data = await searchShows(query.value)
-    results.value = data
+    hasSearched.value = true
+    loading.value = true
+    errorMessage.value = ''
+
+    try {
+        const data = await searchShows(query.value)
+        results.value = data
+    } catch (error) {
+        console.error('Error searching shows:', error)
+        errorMessage.value = 'An error occurred while searching. Please try again.'
+    } finally {
+        loading.value = false
+    }
 }
 
 function stripHtml(html) {
