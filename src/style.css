@@ -52,6 +52,14 @@ header a {
 header a:hover {
   color: var(--accent);
 }
+header .nav-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+header .nav-link.active {
+  color: var(--accent);
+}
 main {
   padding: 28px 32px;
 }
@@ -115,6 +123,21 @@ main {
   display: block;
 }
 .result-item:hover {
+  .fav-btn {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .fav-btn svg {
+    transition: transform 0.15s ease;
+  }
+  .fav-btn.active svg {
+    transform: scale(1.05);
+  }
   transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
 }
@@ -141,7 +164,6 @@ main {
 .result-title {
   font-size: 15px;
   text-align: center;
-  /* margin: 8px 1px 6px; */
 }
 .summary {
   color: var(--muted);
@@ -160,6 +182,14 @@ main {
 .show-detail-view h1 {
   font-size: 32px;
   margin-bottom: 6px;
+}
+.show-detail-view .detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.show-detail-view .detail-header h1 {
+  margin: 0; /* preserve previous inline margin:0 behavior */
 }
 .show-detail-view .meta {
   color: var(--muted);
@@ -216,4 +246,28 @@ main {
 a:focus {
   outline: 2px solid rgba(230, 9, 20, 0.25);
   outline-offset: 2px;
+}
+
+.fav-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.fav-btn svg {
+  transition:
+    transform 0.15s ease,
+    fill 0.12s ease;
+  display: block;
+}
+.fav-btn.active svg {
+  transform: scale(1.05);
+}
+.fav-btn:focus {
+  outline: 2px solid rgba(230, 9, 20, 0.18);
+  outline-offset: 2px;
+  border-radius: 6px;
 }

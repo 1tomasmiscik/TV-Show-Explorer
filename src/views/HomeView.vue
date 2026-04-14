@@ -63,7 +63,7 @@
 <script setup>
   import { ref } from 'vue'
   import { searchShows } from '../services/tvmazeService'
-  import { decode } from 'html-entities'
+  import { stripHtml, truncate } from '../utils/text'
 
   const query = ref('')
   const results = ref([])
@@ -91,25 +91,5 @@
     } finally {
       loading.value = false
     }
-  }
-
-  function stripHtml(html) {
-    if (!html) return ''
-    // remove HTML tags
-    let text = html.replace(/<[^>]*>/g, '')
-    // normalize spaced amp variants like "& amp;" -> "&amp;"
-    text = text.replace(/&\s*amp\s*;/gi, '&amp;')
-    // decode entities (named, numeric, hex). html-entities handles double-encoding too.
-    try {
-      return decode(text)
-    } catch (e) {
-      return text
-    }
-  }
-
-  function truncate(text, max = 70) {
-    if (!text) return ''
-    const chars = Array.from(text)
-    return chars.length > max ? chars.slice(0, max).join('').trimEnd() + '...' : text
   }
 </script>
