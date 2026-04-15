@@ -3,32 +3,36 @@
     <input
       type="text"
       placeholder="Search for TV shows..."
-      :value="modelValue"
+      :value="searchText"
       @input="onInput"
       @keyup.enter="onSubmit"
     />
-    <button type="button" @click="onSubmit" :disabled="loading || !modelValue.trim()">
-      {{ loading ? 'Searching...' : 'Search' }}
+    <button type="button" @click="onSubmit" :disabled="props.loading || !searchText.trim()">
+      {{ props.loading ? 'Searching...' : 'Search' }}
     </button>
   </div>
 </template>
 
 <script setup>
-import { toRef } from 'vue'
-const props = defineProps({
-  modelValue: { type: String, default: '' },
-  loading: { type: Boolean, default: false },
-})
-const emit = defineEmits(['update:modelValue', 'search'])
+  import { ref } from 'vue'
 
-const modelValue = toRef(props, 'modelValue')
+  const props = defineProps({
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  })
+  const emit = defineEmits(['search'])
 
-function onInput(e) {
-  emit('update:modelValue', e.target.value)
-}
+  const searchText = ref('')
 
-function onSubmit() {
-  if (!modelValue.value || !modelValue.value.trim()) return
-  emit('search', modelValue.value.trim())
-}
+  function onInput(e) {
+    searchText.value = e.target.value
+  }
+
+  function onSubmit() {
+    const trimmed = searchText.value ? searchText.value.trim() : ''
+    if (!trimmed) return
+    emit('search', trimmed)
+  }
 </script>

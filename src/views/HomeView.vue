@@ -5,7 +5,7 @@
         <h1>TV Show Explorer</h1>
       </header>
 
-      <SearchBar v-model="query" :loading="loading" @search="handleSearch" />
+      <SearchBar :loading="loading" @search="handleSearch" />
 
       <div class="home-view__results">
         <p v-if="loading">Loading...</p>
@@ -56,15 +56,14 @@
   import { stripHtml, truncate } from '../utils/text'
   import SearchBar from '../components/SearchBar.vue'
 
-  const query = ref('')
   const results = ref([])
 
   const loading = ref(false)
   const errorMessage = ref('')
   const hasSearched = ref(false)
 
-  const handleSearch = async () => {
-    if (!query.value.trim()) {
+  const handleSearch = async (value) => {
+    if (!value.trim()) {
       return
     }
 
@@ -73,7 +72,7 @@
     errorMessage.value = ''
 
     try {
-      const data = await searchShows(query.value)
+      const data = await searchShows(value)
       results.value = data
     } catch (error) {
       console.error('Error searching shows:', error)
