@@ -15,22 +15,24 @@
       </div>
 
       <div class="card-body">
-        <p class="summary">{{ show.summary ? truncate(stripHtml(show.summary), 70) : 'No summary available.' }}</p>
+        <p class="summary">
+          {{ show.summary ? truncate(stripHtml(show.summary), 70) : 'No summary available.' }}
+        </p>
       </div>
     </router-link>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { stripHtml, truncate } from '../../utils/text'
-const props = defineProps({
-  show: { type: Object, required: true },
-})
+  import { computed } from 'vue'
+  import { stripHtml, truncate } from '../../utils/text'
+  const props = defineProps({
+    show: { type: Object, required: true },
+  })
 
-const showImage = computed(() => {
-  const img = props.show.image
-  if (!img) return null
-  return img.medium || img.original || null
-})
+  const showImage = computed(() => {
+    const img = props.show.image
+    if (!img) return null
+    return img.medium || img.original || null
+  })
 </script>

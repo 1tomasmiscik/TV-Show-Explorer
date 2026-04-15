@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-import ShowCard from './ShowCard.vue'
-const props = defineProps({
-  items: { type: Array, default: () => [] },
-})
+  import ShowCard from './ShowCard.vue'
+  const props = defineProps({
+    items: { type: Array, default: () => [] },
+  })
 </script>
