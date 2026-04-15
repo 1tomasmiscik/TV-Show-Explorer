@@ -15,35 +15,7 @@
         <p v-else-if="hasSearched && results.length === 0">No TV shows found.</p>
         <div v-if="results.length > 0">
           <h2>Search Results</h2>
-          <div class="results-grid">
-            <div v-for="show in results" :key="show.id" class="result-item">
-              <router-link
-                :to="{ name: 'show-detail', params: { id: show.id } }"
-                class="result-link"
-              >
-                <h3 class="result-title">{{ show.name }}</h3>
-
-                <div class="image-wrap">
-                  <img
-                    v-if="show.image"
-                    :src="show.image.medium"
-                    :alt="show.name"
-                    class="result-image"
-                    loading="lazy"
-                  />
-                  <div v-else class="result-placeholder">No image</div>
-                </div>
-
-                <div class="card-body">
-                  <p class="summary">
-                    {{
-                      show.summary ? truncate(stripHtml(show.summary), 70) : 'No summary available.'
-                    }}
-                  </p>
-                </div>
-              </router-link>
-            </div>
-          </div>
+          <ShowList :items="results" />
         </div>
       </div>
     </div>
@@ -53,8 +25,8 @@
 <script setup>
   import { ref } from 'vue'
   import { searchShows } from '../services/tvmazeService'
-  import { stripHtml, truncate } from '../utils/text'
-  import SearchBar from '../components/SearchBar.vue'
+  import SearchBar from '../components/search/SearchBar.vue'
+  import ShowList from '../components/shows/ShowList.vue'
 
   const results = ref([])
 
