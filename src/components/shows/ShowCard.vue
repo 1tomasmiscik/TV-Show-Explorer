@@ -5,7 +5,7 @@
 
       <div class="image-wrap">
         <img
-          v-if="show.image"
+          v-if="showImage"
           :src="showImage"
           :alt="show.name"
           class="result-image"
@@ -33,6 +33,9 @@
   const showImage = computed(() => {
     const img = props.show.image
     if (!img) return null
-    return img.medium || img.original || null
+    // if stored as a string (URL), return it
+    if (typeof img === 'string') return img
+    // otherwise assume an object with medium/original
+    return (img && (img.medium || img.original)) || null
   })
 </script>

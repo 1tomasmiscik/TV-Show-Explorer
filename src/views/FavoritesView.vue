@@ -9,22 +9,8 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue'
-  import { getFavorites, onChange, offChange } from '../services/favoritesService'
   import ShowList from '../components/shows/ShowList.vue'
+  import { useFavorites } from '../composables/useFavorites'
 
-  const favorites = ref([])
-
-  function refresh() {
-    favorites.value = getFavorites()
-  }
-
-  onMounted(() => {
-    refresh()
-    onChange(refresh)
-  })
-
-  onUnmounted(() => {
-    offChange(refresh)
-  })
+  const { favorites } = useFavorites()
 </script>

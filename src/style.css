@@ -189,7 +189,7 @@ main {
   gap: 12px;
 }
 .show-detail-view .detail-header h1 {
-  margin: 0; /* preserve previous inline margin:0 behavior */
+  margin: 0;
 }
 .show-detail-view .meta {
   color: var(--muted);
