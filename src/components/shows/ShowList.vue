@@ -1,12 +1,12 @@
 <template>
   <div class="results-grid">
-    <ShowCard v-for="show in items" :key="show.id" :show="show" />
+    <ShowCard v-for="show in shows" :key="show.id" :show="show" />
   </div>
 </template>
 
 <script setup>
   import ShowCard from './ShowCard.vue'
   const props = defineProps({
-    items: { type: Array, default: () => [] },
+    shows: { type: Array, default: () => [] },
   })
 </script>

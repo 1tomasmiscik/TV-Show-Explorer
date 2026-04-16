@@ -70,7 +70,6 @@
       if (!newId) return
       await load(newId)
     },
-    { immediate: true },
+    { immediate: true }
   )
-
 </script>

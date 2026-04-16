@@ -12,10 +12,11 @@
         <p v-else-if="errorMessage">
           {{ errorMessage }}
         </p>
+        <p v-else-if="!hasSearched" class="muted">Search for a TV show to see results.</p>
         <p v-else-if="hasSearched && results.length === 0">No TV shows found.</p>
         <div v-if="results.length > 0">
           <h2>Search Results</h2>
-          <ShowList :items="results" />
+          <ShowList :shows="results" />
         </div>
       </div>
     </div>

@@ -35,15 +35,26 @@ function mapFavorite(show) {
 const favorites = ref(loadFavorites())
 
 // keep in sync across tabs/windows
-window.addEventListener('storage', (e) => {
-  if (e.key === STORAGE_KEY) {
-    favorites.value = e.newValue ? JSON.parse(e.newValue) : []
-  }
-})
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key !== STORAGE_KEY) return
+
+    try {
+      favorites.value = event.newValue ? JSON.parse(event.newValue) : []
+    } catch (error) {
+      favorites.value = []
+    }
+  })
+}
+
+function normalizeId(id) {
+  return Number(id)
+}
 
 export function useFavorites() {
   function isFavorite(id) {
-    return favorites.value.some((item) => item.id === Number(id) || item.id === id)
+    const normalizedId = normalizeId(id)
+    return favorites.value.some((item) => normalizeId(item.id) === normalizedId)
   }
 
   function addFavorite(show) {
@@ -56,9 +67,9 @@ export function useFavorites() {
   }
 
   function removeFavorite(id) {
-    const next = favorites.value.filter((item) => item.id !== Number(id) && item.id !== id)
-    favorites.value = next
-    saveFavorites(next)
+    const normalizedId = normalizeId(id)
+    favorites.value = favorites.value.filter((item) => normalizeId(item.id) !== normalizedId)
+    saveFavorites(favorites.value)
     return true
   }
 

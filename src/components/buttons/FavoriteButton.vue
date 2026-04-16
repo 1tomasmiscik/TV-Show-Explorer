@@ -4,6 +4,7 @@
     :class="{ active: active }"
     @click="onToggle"
     :aria-pressed="active"
+    :aria-label="active ? 'Remove from favorites' : 'Add to favorites'"
     :title="active ? 'Remove from favorites' : 'Add to favorites'"
     type="button"
   >
@@ -19,12 +20,12 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  active: { type: Boolean, default: false },
-})
-const emit = defineEmits(['toggle'])
+  const props = defineProps({
+    active: { type: Boolean, default: false },
+  })
+  const emit = defineEmits(['toggle'])
 
-function onToggle() {
-  emit('toggle')
-}
+  function onToggle() {
+    emit('toggle')
+  }
 </script>

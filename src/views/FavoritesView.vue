@@ -3,7 +3,7 @@
     <h1>Favorites</h1>
     <div v-if="favorites.length === 0" class="muted">No favorites yet.</div>
     <div v-else>
-      <ShowList :items="favorites" />
+      <ShowList :shows="favorites" />
     </div>
   </div>
 </template>

@@ -1,6 +1,9 @@
 const BASE_URL = 'https://api.tvmaze.com'
 export async function searchShows(query) {
-  const response = await fetch(`${BASE_URL}/search/shows?q=${encodeURIComponent(query)}`)
+  const normalizedQuery = query.trim()
+  if (!normalizedQuery) return []
+
+  const response = await fetch(`${BASE_URL}/search/shows?q=${encodeURIComponent(normalizedQuery)}`)
 
   if (!response.ok) {
     throw new Error('Failed to fetch shows')

@@ -123,23 +123,23 @@ main {
   display: block;
 }
 .result-item:hover {
-  .fav-btn {
-    background: transparent;
-    border: none;
-    padding: 6px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  .fav-btn svg {
-    transition: transform 0.15s ease;
-  }
-  .fav-btn.active svg {
-    transform: scale(1.05);
-  }
   transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+.fav-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.fav-btn svg {
+  transition: transform 0.15s ease;
+}
+.fav-btn.active svg {
+  transform: scale(1.05);
 }
 .image-wrap {
   width: 100%;
@@ -228,6 +228,21 @@ main {
   color: var(--text);
   padding: 8px 12px;
   border-radius: 6px;
+}
+
+.not-found-view {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.not-found-view h1 {
+  font-size: 64px;
+  margin-bottom: 12px;
+}
+
+.not-found-view p {
+  color: var(--muted);
+  margin-bottom: 20px;
 }
 
 @media (max-width: 700px) {
